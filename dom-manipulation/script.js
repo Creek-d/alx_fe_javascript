@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const newQuoteButton = document.getElementById("newQuote");
     
     // Function to display a random quote
-    function displayRandomQuote() {
+    function showRandomQuote() {
         if (quotes.length === 0) {
             quoteDisplay.innerHTML = "No quotes available. Please add some!";
             return;
