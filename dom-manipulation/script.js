@@ -103,4 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
     showRandomQuote();
     fetchQuotesFromServer();
     syncQuotes();
+
+    setInterval(syncQuotes, 60000); // Sync every 60 seconds
 });
