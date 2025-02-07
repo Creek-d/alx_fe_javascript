@@ -39,6 +39,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    async function syncQuotes() {
+        await fetchQuotesFromServer();
+        quotes.forEach(postQuoteToServer);
+    }
+
     function populateCategories() {
         const categories = ["All Categories", ...new Set(quotes.map(q => q.category))];
         categoryFilter.innerHTML = "";
@@ -97,4 +102,5 @@ document.addEventListener("DOMContentLoaded", function () {
     loadStoredPreferences();
     showRandomQuote();
     fetchQuotesFromServer();
+    syncQuotes();
 });
