@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     async function syncQuotes() {
         await fetchQuotesFromServer();
         quotes.forEach(postQuoteToServer);
+        console.log("Quotes synced with server!");
     }
 
     function populateCategories() {
