@@ -9,6 +9,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const newQuoteButton = document.getElementById("newQuote");
     const categoryFilter = document.getElementById("categoryFilter");
 
+    async function fetchQuotesFromServer() {
+        try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/posts");
+            const data = await response.json();
+            const serverQuotes = data.slice(0, 5).map(post => ({ text: post.title, category: "Server Data" }));
+            quotes = [...quotes, ...serverQuotes];
+            localStorage.setItem("quotes", JSON.stringify(quotes));
+            populateCategories();
+            showRandomQuote();
+        } catch (error) {
+            console.error("Error fetching quotes from server:", error);
+        }
+    }
+
     function populateCategories() {
         const categories = ["All Categories", ...new Set(quotes.map(q => q.category))];
         categoryFilter.innerHTML = "";
@@ -64,4 +78,5 @@ document.addEventListener("DOMContentLoaded", function () {
     populateCategories();
     loadStoredPreferences();
     showRandomQuote();
+    fetchQuotesFromServer();
 });
