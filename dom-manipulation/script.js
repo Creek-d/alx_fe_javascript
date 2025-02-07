@@ -11,7 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function populateCategories() {
         const categories = ["All Categories", ...new Set(quotes.map(q => q.category))];
-        categoryFilter.innerHTML = categories.map(cat => `<option value="${cat}">${cat}</option>`).join("");
+        categoryFilter.innerHTML = "";
+        categories.forEach(cat => {
+            const option = document.createElement("option");
+            option.value = cat;
+            option.textContent = cat;
+            categoryFilter.appendChild(option);
+        });
     }
 
     function showRandomQuote() {
