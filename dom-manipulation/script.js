@@ -23,6 +23,22 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    async function postQuoteToServer(quote) {
+        try {
+            const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(quote)
+            });
+            const result = await response.json();
+            console.log("Quote posted successfully:", result);
+        } catch (error) {
+            console.error("Error posting quote to server:", error);
+        }
+    }
+
     function populateCategories() {
         const categories = ["All Categories", ...new Set(quotes.map(q => q.category))];
         categoryFilter.innerHTML = "";
@@ -57,12 +73,14 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Please enter both a quote and a category.");
             return;
         }
-        quotes.push({ text: quoteText, category: quoteCategory });
+        const newQuote = { text: quoteText, category: quoteCategory };
+        quotes.push(newQuote);
         localStorage.setItem("quotes", JSON.stringify(quotes));
         document.getElementById("newQuoteText").value = "";
         document.getElementById("newQuoteCategory").value = "";
         populateCategories();
         showRandomQuote();
+        postQuoteToServer(newQuote);
     }
 
     function loadStoredPreferences() {
